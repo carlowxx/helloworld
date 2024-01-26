@@ -21,9 +21,8 @@ body {
 }
 
 body {
-    background-color: rgb(114, 114, 114);
+    background-color: rgb(114, 114, 114, 0.1);
     background-attachment: fixed;
-
 }
 
 /* Elementos de uso geral */
@@ -47,13 +46,15 @@ a:hover {
 
 /* Cabeçalho (header) */
 header {
-    background-color: rgb(224, 62, 62);
+    background-color: rgb(0, 204, 255);
+    display:flex;
+    flex-direction: column;
 }
 
-.logo {
+.logotipo {
     display: block;
     width: 5rem;
-    margin: .5rem 1rem .5rem 1rem;
+    margin: .5rem 1rem .5rem .5rem;
 }
 
 .header-title-logo {
@@ -70,50 +71,86 @@ header {
 }
 
 .header-title small {
-    letter-spacing: .03rem;
+    letter-spacing: 0.3rem;
 }
 
 .header-search {
-    width: 100%;
+    background-color: rgb(0, 0, 0);
     padding: 1rem;
 }
 
 .header-search form {
     display: flex;
+    align-items: center;
+    height: 100%
 }
 .header-search form input{
     flex-grow: 1;
 }
 /* Menu principal (nav) */
 nav {
-    background-color: rgb(224, 62, 62);
-    border-top: 1px solid grey;
-    border-bottom: 1px solid grey;
+    background-color: rgb(0, 204, 255);
+    border-top: 1px solid rgb(0, 0, 0);
+    border-bottom: 1px solid rgb(0, 0, 0);
     display: flex;
     align-items: center;
     justify-content: space-around;
 }
 
 nav a {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
     padding: 1rem;
     text-align: center;
+    color: black;
 }
 nav a:hover {
     color: white;
+    text-decoration: none;
 }
 nav a i {
-    font-size: 1.5rem;
+    font-size: 2.2rem;
+    margin-bottom: .25rem;
 }
 
 /* Conteúdo principal */
-main {}
+main {
+    display:flex;
+    flex-direction: column;
+}
 
-main article {}
+main article {
+    background-color: rgba(255, 255, 255, 0.9);
+}
 
-main aside {}
+main aside, main article {
+    padding: 0 1.5rem;
+}
 
+main aside{
+    background-color: rgba(236, 236, 236, 0.9);
+}
 /* Rodapé (footer) */
-footer {}
+footer {
+    background-color: black;
+    color: azure;
+    display: flex;
+    align-items: center;
+}
+
+footer>div {
+    flex-grow: 1;
+    text-align: center;
+}
+footer>a{
+    font-size: 1rem;
+    padding: .5rem;
+    color: #fff;
+}
+footer>div>a {
+    font-size: small;
+}
 
 /* Classes de uso geral */
 .red {}
@@ -121,7 +158,69 @@ footer {}
 .center {}
 
 /* Elementos de formulários */
-input, textarea, button {
+input,
+ textarea,
+  button {
     font-family: inherit;
     font-size: inherit;
+}
+/*Responsividade
+Telas de 768px ou mais...
+*/
+@media only screen and (min-width: 768px) {
+
+    /* Conteúdo principal */
+    main {
+        flex-direction: row;
+    }
+
+    main article {
+        flex-grow: 1;
+    }
+
+    main aside {
+        min-width: 14rem;
+        max-width: 14rem;
+    }
+
+    header {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .header-search {width :60%
+    }
+    
+    .header-search form {
+        display: flex;
+        align-items: center;
+    }
+    .header-search form input{
+        flex-grow: 1;
+    }
+}
+/*reponsividade
+telas de 425px ou mais...
+*/
+@media screen and (min-width:425px) {
+    nav {
+       
+    }
+    
+    nav a {
+        flex-direction: row;
+    }
+    nav a :first-child{
+    margin-right: auto;
+    }
+
+    nav a:hover {}
+
+    nav a i {
+        font-size: 1.25rem;
+        margin-bottom: 0rem;
+        margin-right: .35rem;
+    }
+    
+
 }
