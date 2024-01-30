@@ -42,6 +42,8 @@ a:hover {
     height: 100%;
     max-width: 1024px;
     margin: auto;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Cabeçalho (header) */
@@ -84,7 +86,21 @@ header {
     align-items: center;
     height: 100%
 }
+.search {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+    border: 2px solid #000000; 
+    color: #000000; 
+    background-color: #ffffff; 
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
 .header-search form input{
+    border-radius: 4rem;
     flex-grow: 1;
 }
 /* Menu principal (nav) */
@@ -118,6 +134,7 @@ nav a i {
 main {
     display:flex;
     flex-direction: column;
+    flex-grow: 1;
 }
 
 main article {
@@ -196,7 +213,9 @@ Telas de 768px ou mais...
         align-items: center;
     }
     .header-search form input{
+        border-radius: 2rem;
         flex-grow: 1;
+        padding: 0.5rem;
     }
 }
 /*reponsividade
