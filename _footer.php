@@ -14,6 +14,8 @@
         </footer>
     </div>
     <script src="assets/js/global.js"></script>
+    <!-- Importa o javascript específico desta página -->
+    <script src ="assets/js/global.js
 </body>
 
 </html>

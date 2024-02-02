@@ -55,7 +55,7 @@ header {
 
 .logotipo {
     display: block;
-    width: 5rem;
+    width: 9rem;
     margin: .5rem 1rem .5rem .5rem;
 }
 
@@ -86,9 +86,8 @@ header {
     align-items: center;
     height: 100%
 }
-.search {
-    display: inline-block;
-    padding: 10px 20px;
+.search {    display: inline-block;
+    padding: 0.5rem 0.7rem;
     font-size: 16px;
     text-align: center;
     text-decoration: none;
@@ -100,6 +99,7 @@ header {
     transition: background-color 0.3s, color 0.3s;
 }
 .header-search form input{
+    padding: 0.5rem;
     border-radius: 4rem;
     flex-grow: 1;
 }
@@ -138,6 +138,7 @@ main {
 }
 
 main article {
+    flex-grow: 1;
     background-color: rgba(255, 255, 255, 0.9);
 }
 
@@ -146,7 +147,10 @@ main aside, main article {
 }
 
 main aside{
-    background-color: rgba(236, 236, 236, 0.9);
+    min-height: 5rem;    
+    background-color: rgba(207, 207, 207, 0.9);
+
+   
 }
 /* Rodapé (footer) */
 footer {
@@ -189,10 +193,6 @@ Telas de 768px ou mais...
     /* Conteúdo principal */
     main {
         flex-direction: row;
-    }
-
-    main article {
-        flex-grow: 1;
     }
 
     main aside {
