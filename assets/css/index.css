@@ -1,0 +1,42 @@
+.article {
+    background-color: rgb(179, 179, 179);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    border-radius: .3rem;
+}
+
+.article:hover {
+    background-color: #ddd;
+}
+
+.article img {
+    width: 100%;
+    height: auto;
+    border-radius: .35rem .35rem 0 0;
+}
+
+.article div {
+    padding: 0 1rem;
+}
+
+
+@media screen and (min-width: 768px) {
+
+
+    .article {
+        flex-direction: row;
+    }
+
+    .article img {
+        width: 6rem;
+        height: auto;
+        
+    }
+
+    .article div {
+        padding: 0 1rem;
+    }
+
+}

@@ -57,7 +57,7 @@ else :
 
         $articles .= <<<HTML
 
-<div onclick="location.href = 'view.php?id={$art['art_id']}'">
+<div class="article" onclick="location.href = 'view.php?id={$art['art_id']}'">
     <img src="{$art['art_thumbnail']}" alt="{$art['art_title']}">
     <div>
         <h4>{$art['art_title']}</h4>
