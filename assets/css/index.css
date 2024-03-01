@@ -17,6 +17,7 @@
     border-radius: .35rem .35rem 0 0;
 }
 
+
 .article div {
     padding: 0 1rem;
 }
@@ -39,4 +40,20 @@
         padding: 0 1rem;
     }
 
+}
+
+.viewed {
+padding:1rem;
+background-color: rgb(255, 136, 0);
+display:flex ;  
+flex-direction: column;
+cursor: pointer;
+border-radius: .5rem;
+margin-bottom: 1rem;
+}
+.viewed img{
+    display: flex;
+    border-radius: .80rem .80rem .80rem .80rem;
+    width: 100%;
+    
 }

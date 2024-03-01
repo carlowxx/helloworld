@@ -33,7 +33,8 @@ $site = [
     "mysql_hostname" => "localhost",        // Servidor do banco de dados MySQL
     "mysql_username" => "root",             // Nome do usuário do MySQL para o app
     "mysql_password" => "",                 // Senha do usuário do MySQL para o app
-    "mysql_database" => "helloword"         // Nome do banco de dados do MySQL para o app
+    "mysql_database" => "helloword",         // Nome do banco de dados do MySQL para o app
+    "summary_length" => 40
 ];
 
 /**

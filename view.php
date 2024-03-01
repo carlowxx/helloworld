@@ -83,12 +83,32 @@ $article = <<<ART
 
 ART;
 
+$aside = <<<HTML
+<div class = "aside">
+    <img src="{$art['emp_photo']}" alt = "{$art['emp_name']}">
+    <h3>{$art['emp_name']}</h3>
+    <h3>{$art['emp_age']} Anos</h3>
+
+
+
+
+
+HTML;
+
+// Atualiza as visualizações do artigo
+$sql = <<<SQL
+UPDATE article 
+    SET art_views = art_views + 1 
+WHERE art_id = '{$id}';
+SQL;
+$conn->query($sql);
+
 // Inclui o cabeçalho do documento
 require('_header.php');
 ?>
 
 <article><?php echo $article ?></article>
 
-<aside></aside>
+<aside><?php echo $aside ?></aside>
 
 <?php require('_footer.php') ?>

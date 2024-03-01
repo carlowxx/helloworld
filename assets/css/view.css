@@ -1,0 +1,13 @@
+.aside img{width: 100%;
+    
+    border-radius: 1rem 1rem 1rem 1rem;
+    
+
+}
+.aside{
+    padding-top: 3rem;
+}
+.aside {
+    display: flex;
+    flex-direction: column;
+}
