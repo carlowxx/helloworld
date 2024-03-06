@@ -1,5 +1,5 @@
 .article {
-    background-color: rgb(179, 179, 179);
+    background-color: rgb(230, 230, 230);
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
@@ -12,6 +12,8 @@
 }
 
 .article img {
+    
+    border-style: double;
     width: 100%;
     height: auto;
     border-radius: .35rem .35rem 0 0;
@@ -20,6 +22,10 @@
 
 .article div {
     padding: 0 1rem;
+    border-style: double;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 
@@ -31,6 +37,7 @@
     }
 
     .article img {
+        
         width: 6rem;
         height: auto;
         
@@ -41,17 +48,22 @@
     }
 
 }
+.viewed div{
+    padding: 0 1rem;
+}
 
 .viewed {
 padding:1rem;
-background-color: rgb(255, 136, 0);
+background-color:  rgb(230, 230, 230);
 display:flex ;  
 flex-direction: column;
 cursor: pointer;
 border-radius: .5rem;
 margin-bottom: 1rem;
+border-style: double;
 }
 .viewed img{
+    height: auto;
     display: flex;
     border-radius: .80rem .80rem .80rem .80rem;
     width: 100%;

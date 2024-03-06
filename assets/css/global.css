@@ -149,7 +149,7 @@ main aside, main article {
 
 main aside{
     min-height: 5rem;    
-    background-color: rgba(207, 207, 207, 0.9);
+    background-color: rgb(216, 217, 230);
 
    
 }
@@ -175,9 +175,13 @@ footer>div>a {
 }
 
 /* Classes de uso geral */
-.red {}
+.red {
+    color: red;
+}
 
-.center {}
+.center {
+    text-align: center;
+}
 
 /* Elementos de formulários */
 input,
