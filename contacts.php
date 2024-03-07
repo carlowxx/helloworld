@@ -3,6 +3,9 @@
 // Carrega configurações globais
 require("_global.php");
 
+/**
+ * A super global $_POST[] recebe os dados de um formulário submetido pelo método POST.
+ **/
 // debug($_POST);
 
 // Configurações desta página
@@ -12,29 +15,119 @@ $page = array(
     "js" => "contacts.js",      // JavaScript desta página
 );
 
-// Variável de feedback
+/**
+ * Define as principais variáveis do script
+ **/
+
+// Values dos campos do formulário
+$form = [
+    'name' => 'Joca da Silva e Souza',
+    'email' => 'joca@silva.com',
+    'subject' => 'Assunto de teste',
+    'message' => 'Mensagem de teste.'
+];
+
+// Mensagens de erro
+$error = '';
+
+/**
+ * Variável de feedback
+ *      $sended = false (default) → Formulário não submetido ou contém falhas de preenchimento
+ *      $sended = true → Formulário foi subetido com sucesso. Exibe o feedback.
+ **/
 $sended = false;
 
 // Se o formulário foi enviado
 if (isset($_POST['send'])) :
 
-    // Grava contato no banco de dados
-    $sql = <<<SQL
+    /*************************************************
+     * Sanitiza e valida preenchimento do formulário *
+     *************************************************/
+
+    /**
+     * Campo 'name' deve ter pelo menos 3 caracteres
+     * Referências:
+     *       https://www.w3schools.com/php/func_string_htmlspecialchars.asp
+     *       https://www.w3schools.com/php/func_string_trim.asp
+     **/
+    $form['name'] = htmlspecialchars(trim($_POST['name']));
+    if (strlen($form['name']) < 3)
+        $error .= '<li>Seu nome deve ter pelo menos 3 letras.</li>';
+
+    /**
+     * Campo 'email' deve ser um e-mail válido
+     * Referências:
+     *      https://www.w3schools.com/php/func_filter_input.asp
+     **/
+    $form['email'] = trim(filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL));
+    if (!filter_var($form['email'], FILTER_VALIDATE_EMAIL))
+        $error .= '<li>Seu endereço de e-mail está inválido.</li>';
+
+    /**
+     * Campo 'subject' deve ter pelo menos 4 caracteres
+     **/
+    $form['subject'] = htmlspecialchars(trim($_POST['subject']));
+    if (strlen($form['subject']) < 4)
+        $error .= '<li>O assunto deve ter pelo menos 4 caracteres.</li>';
+
+    /**
+     * Campo 'message' deve ter pelo menos 5 caracteres
+     **/
+    $form['message'] = htmlspecialchars(trim($_POST['message']));
+    if (strlen($form['message']) < 5)
+        $error .= '<li>A mensagem deve ter pelo menos 5 caracteres.</li>';
+
+    //  Se NÃO ocorreram erros no preenchimento do formulário
+    if ($error == '') :
+
+
+
+
+        // Grava contato no banco de dados
+        $sql = <<<SQL
 
 INSERT INTO contact
-(`ctt_name`, `ctt_email`, `ctt_subject`, `ctt_message`)
+    (ctt_name, ctt_email, ctt_subject, ctt_message)
 VALUES
-('{$_POST['name']}', '{$_POST['email']}', '{$_POST['subject']}', '{$_POST['message']}');
+    (?, ?, ?, ?);
 
 SQL;
 
-    // debug($sql, true);
+        // Teste o SQL no PHPMyAdmin para ter certeza de que está ok
+        // debug($sql, true);
 
-    // Envia para o banco de dados
-    $conn->query($sql);
+        // Prepara o comando SQL para o banco de dados
+        $stmt = $conn->prepare($sql);
 
-    // Formulário enviado
-    $sended = true;
+        // Envia os dados para o banco
+        $stmt->bind_param(
+            "ssss", // Substitui os "?" do SQL por strings
+            $form['name'], // Campos...
+            $form['email'],
+            $form['subject'],
+            $form['message']
+        );
+
+        // Avisa ao banco de dados para executar a query
+        $stmt->execute();
+
+        // Confirma para o remetente que formulário foi enviado 
+        $sended = true;
+
+    // Se ocorreram erros no preenchimento do formulário
+    else :
+
+        // Monta feedback de erro para o remetente
+        $error = <<<HTML
+        
+        <h4>Ooooops!</h4>
+        <p>Ocorreram erros no preenchimento do formulário.
+        <ul>{$error}</ul>
+        <p>Por favor, revise o preenchimento e envie novamente.</p>
+
+HTML;
+
+    endif;
 
 endif;
 
@@ -46,13 +139,13 @@ require('_header.php');
 
     <h2>Faça Contato</h2>
 
-    <?php if ($sended) : ?>
-
-        <?php
+    <?php
+    // Se o formulário fou submetido, exibe um feedback para o remetente
+    if ($sended) :
         // Extrai somente o primeiro nome do remetente
         $allnames = explode(" ", $_POST['name']);
         $firstname = $allnames[0];
-        ?>
+    ?>
 
         <h3>Olá <?php echo $firstname ?>!</h3>
         <p>Seu contato foi enviado com sucesso.</p>
@@ -61,11 +154,18 @@ require('_header.php');
             <button onclick="location.href='contacts.php'" type="button">Enviar outro contato</button>
         </p>
 
-    <?php else : ?>
+    <?php
+    // Se o formulário NÃO foi submetido, exibe ele novamente
+    else :
+
+        // Se ocorreram erros, exibe a caixa de mensagem
+        if ($error != '')
+            echo '<div class="error">' . $error . '</div>';
+    ?>
 
         <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
 
-            <?php // Campo oculto para detectar se o form foi enviado 
+            <?php // Campo oculto para detectar se o formulário foi enviado 
             ?>
             <input type="hidden" name="send" value="">
 
@@ -74,22 +174,22 @@ require('_header.php');
 
             <p>
                 <label for="name">Nome:</label>
-                <input type="text" name="name" id="name" placeholder="Seu nome completo." value="Joca da Silva">
+                <input type="text" name="name" id="name" placeholder="Seu nome completo." value="<?php echo $form['name'] ?>">
             </p>
 
             <p>
                 <label for="email">E-mail:</label>
-                <input type="email" name="email" id="email" placeholder="usuario@provedor.com" value="joca@silva.com">
+                <input type="text" name="email" id="email" placeholder="usuario@provedor.com" value="<?php echo $form['email'] ?>">
             </p>
 
             <p>
                 <label for="subject">Assunto:</label>
-                <input type="text" name="subject" id="subject" placeholder="Sobre o que deseja escrever" value="Assunto de teste">
+                <input type="text" name="subject" id="subject" placeholder="Sobre o que deseja escrever" value="<?php echo $form['subject'] ?>">
             </p>
 
             <p>
                 <label for="message">Mensagem:</label>
-                <textarea name="message" id="message" placeholder="Escreva sua mensagem aqui">Mensagem de teste</textarea>
+                <textarea name="message" id="message" placeholder="Escreva sua mensagem aqui"><?php echo $form['message'] ?></textarea>
             </p>
 
             <p>
