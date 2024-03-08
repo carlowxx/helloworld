@@ -1,0 +1,82 @@
+/* Formata mensagem de erro do back-end */
+#error {
+    background-color: rgb(255, 198, 198);
+    display: table;
+    margin: auto;
+    padding: 1rem;
+    border: 1px dotted red;
+    border-radius: .3rem;
+    color: rgb(87, 0, 0);
+}
+
+#error h4,
+#error p:last-child {
+    margin: 0;
+}
+
+#closeme {
+    float: right;
+    margin: -0.5rem -0.5rem 0 0;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+#contact {}
+
+#contact label {
+    display: block;
+    padding: 0 0 .3rem .3rem;
+}
+
+#contact input,
+#contact textarea,
+#contact button {
+    padding: .4rem;
+    font-size: 110%;
+    border: none;
+    border-radius: .4rem;
+    ;
+}
+
+#contact input,
+#contact textarea {
+    width: 100%;
+    border: 1px solid red;
+    border-bottom: 3px solid red;
+    background-color: rgb(254, 220, 220);
+}
+
+#contact textarea {
+    height: 6rem;
+    resize: vertical;
+}
+
+#contact button {
+    border: 1px solid grey;
+    padding: .5rem 1rem;
+    font-weight: bold;
+    background-color: #ddd;
+    color: #6e6e6e;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Campos com valor válido */
+
+#contact input:valid,
+#contact textarea:valid {
+    border: 1px solid rgb(18, 118, 0);
+    border-bottom: 3px solid rgb(18, 118, 0);
+    background-color: rgb(232,240,254);
+}
+
+#contact:valid button {
+    background-color: steelblue;
+    color: white;
+    cursor: pointer;
+    pointer-events: all;
+}
+
+/*
+rgb(232,240,254);
+*/

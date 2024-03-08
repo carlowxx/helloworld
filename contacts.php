@@ -21,10 +21,10 @@ $page = array(
 
 // Values dos campos do formulário
 $form = [
-    'name' => 'Joca da Silva e Souza',
-    'email' => 'joca@silva.com',
-    'subject' => 'Assunto de teste',
-    'message' => 'Mensagem de teste.'
+    'name' => '',
+    'email' => '',
+    'subject' => '',
+    'message' => ''
 ];
 
 // Mensagens de erro
@@ -80,9 +80,6 @@ if (isset($_POST['send'])) :
     //  Se NÃO ocorreram erros no preenchimento do formulário
     if ($error == '') :
 
-
-
-
         // Grava contato no banco de dados
         $sql = <<<SQL
 
@@ -112,7 +109,7 @@ SQL;
         $stmt->execute();
 
         // Confirma para o remetente que formulário foi enviado 
-        $sended = true;
+        header("Location: contactok.php?name={$form['name']}");
 
     // Se ocorreram erros no preenchimento do formulário
     else :
@@ -120,10 +117,11 @@ SQL;
         // Monta feedback de erro para o remetente
         $error = <<<HTML
         
+        <span id="closeme"><i class="fa-solid fa-xmark fa-fw"></i></span>
         <h4>Ooooops!</h4>
         <p>Ocorreram erros no preenchimento do formulário.
         <ul>{$error}</ul>
-        <p>Por favor, revise o preenchimento e envie novamente.</p>
+        <p>Por favor, revise o preenchimento e envie novamente.</p>                
 
 HTML;
 
@@ -140,30 +138,12 @@ require('_header.php');
     <h2>Faça Contato</h2>
 
     <?php
-    // Se o formulário fou submetido, exibe um feedback para o remetente
-    if ($sended) :
-        // Extrai somente o primeiro nome do remetente
-        $allnames = explode(" ", $_POST['name']);
-        $firstname = $allnames[0];
-    ?>
-
-        <h3>Olá <?php echo $firstname ?>!</h3>
-        <p>Seu contato foi enviado com sucesso.</p>
-        <p><em>Obrigado...</em></p>
-        <p class="center">
-            <button onclick="location.href='contacts.php'" type="button">Enviar outro contato</button>
-        </p>
-
-    <?php
-    // Se o formulário NÃO foi submetido, exibe ele novamente
-    else :
-
         // Se ocorreram erros, exibe a caixa de mensagem
         if ($error != '')
-            echo '<div class="error">' . $error . '</div>';
+            echo '<div id="error">' . $error . '</div>';
     ?>
 
-        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
+        <form id="contact" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
 
             <?php // Campo oculto para detectar se o formulário foi enviado 
             ?>
@@ -174,22 +154,22 @@ require('_header.php');
 
             <p>
                 <label for="name">Nome:</label>
-                <input type="text" name="name" id="name" placeholder="Seu nome completo." value="<?php echo $form['name'] ?>">
+                <input type="text" name="name" id="name" placeholder="Seu nome completo." value="<?php echo $form['name'] ?>" required minlength="3">
             </p>
 
             <p>
                 <label for="email">E-mail:</label>
-                <input type="text" name="email" id="email" placeholder="usuario@provedor.com" value="<?php echo $form['email'] ?>">
+                <input type="email" name="email" id="email" placeholder="usuario@provedor.com" value="<?php echo $form['email'] ?>" required>
             </p>
 
             <p>
                 <label for="subject">Assunto:</label>
-                <input type="text" name="subject" id="subject" placeholder="Sobre o que deseja escrever" value="<?php echo $form['subject'] ?>">
+                <input type="text" name="subject" id="subject" placeholder="Sobre o que deseja escrever" value="<?php echo $form['subject'] ?>" required minlength="4">
             </p>
 
             <p>
                 <label for="message">Mensagem:</label>
-                <textarea name="message" id="message" placeholder="Escreva sua mensagem aqui"><?php echo $form['message'] ?></textarea>
+                <textarea name="message" id="message" placeholder="Escreva sua mensagem aqui" required minlength="5"><?php echo $form['message'] ?></textarea>
             </p>
 
             <p>
@@ -198,11 +178,11 @@ require('_header.php');
 
         </form>
 
-    <?php endif ?>
-
 </article>
 
-<aside></aside>
+<aside>
+    <?php require('_socialaside.php') ?>
+</aside>
 
 <?php
 // Inclui o rodapé do documento
