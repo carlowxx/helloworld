@@ -57,6 +57,12 @@
             <span>Sobre</span>
         </a>
 
+        <a id="userAccess" href="login.php" title="Logue-se">
+            <img id="userImg" src="" alt="">
+                <i id="userIcon" class="fa-solid fa-right-to-bracket fa-fw"></i>
+                <span id="userLabel">Entrar</span>
+            </a>
+
 
     </nav>
 

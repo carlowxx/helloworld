@@ -17,6 +17,11 @@
 &nbsp;
 </div>
 
+<?php // Importa as bibliotecas e configuração do Firebase ?>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+    
+
 <?php // Importa o JavaScript do tema 
 ?>
 <script src="assets/js/global.js"></script>

@@ -138,50 +138,53 @@ require('_header.php');
     <h2>Faça Contato</h2>
 
     <?php
-        // Se ocorreram erros, exibe a caixa de mensagem
-        if ($error != '')
-            echo '<div id="error">' . $error . '</div>';
+    // Se ocorreram erros, exibe a caixa de mensagem
+    if ($error != '')
+        echo '<div id="error">' . $error . '</div>';
     ?>
 
-        <form id="contact" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
+    <form id="contact" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
 
-            <?php // Campo oculto para detectar se o formulário foi enviado 
-            ?>
-            <input type="hidden" name="send" value="">
+        <?php // Campo oculto para detectar se o formulário foi enviado 
+        ?>
+        <input type="hidden" name="send" value="">
 
-            <p>Preencha todos os campos do formulário para enviar um contato para a equipe do <strong><?php echo $site['sitename'] ?></strong>.</p>
-            <p class="center red"><small>Todos os campos são obrigatórios.</small></p>
+        <p>Preencha todos os campos do formulário para enviar um contato para a equipe do <strong><?php echo $site['sitename'] ?></strong>.</p>
+        <p class="center red"><small>Todos os campos são obrigatórios.</small></p>
 
-            <p>
-                <label for="name">Nome:</label>
-                <input type="text" name="name" id="name" placeholder="Seu nome completo." value="<?php echo $form['name'] ?>" required minlength="3">
-            </p>
+        <p>
+            <label for="name">Nome:</label>
+            <input type="text" name="name" id="name" placeholder="Seu nome completo." value="<?php echo $form['name'] ?>" required minlength="3">
+        </p>
 
-            <p>
-                <label for="email">E-mail:</label>
-                <input type="email" name="email" id="email" placeholder="usuario@provedor.com" value="<?php echo $form['email'] ?>" required>
-            </p>
+        <p>
+            <label for="email">E-mail:</label>
+            <input type="email" name="email" id="email" placeholder="usuario@provedor.com" value="<?php echo $form['email'] ?>" required>
+        </p>
 
-            <p>
-                <label for="subject">Assunto:</label>
-                <input type="text" name="subject" id="subject" placeholder="Sobre o que deseja escrever" value="<?php echo $form['subject'] ?>" required minlength="4">
-            </p>
+        <p>
+            <label for="subject">Assunto:</label>
+            <input type="text" name="subject" id="subject" placeholder="Sobre o que deseja escrever" value="<?php echo $form['subject'] ?>" required minlength="4">
+        </p>
 
-            <p>
-                <label for="message">Mensagem:</label>
-                <textarea name="message" id="message" placeholder="Escreva sua mensagem aqui" required minlength="5"><?php echo $form['message'] ?></textarea>
-            </p>
+        <p>
+            <label for="message">Mensagem:</label>
+            <textarea name="message" id="message" placeholder="Escreva sua mensagem aqui" required minlength="5"><?php echo $form['message'] ?></textarea>
+        </p>
 
-            <p>
-                <button type="submit">Enviar</button>
-            </p>
+        <p>
+            <button type="submit">Enviar</button>
+        </p>
 
-        </form>
+    </form>
 
 </article>
 
 <aside>
-    <?php require('_socialaside.php') ?>
+    <?php
+    // Lista de redes sociais
+    require('widgets/_socialaside.php');
+    ?>
 </aside>
 
 <?php

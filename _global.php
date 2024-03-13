@@ -18,14 +18,17 @@
  * Evita problemas de acentuação
  **/
 header("Content-type: text/html; charset=utf-8");
+setlocale(LC_ALL, 'pt_BR.UTF8');
+mb_internal_encoding('UTF8');
+mb_regex_encoding('UTF8');
 
 /**
  * Configurações globais do site.
  * Altere conforme suas necessidades.
- **/ 
+ **/
 $site = [
-    "sitename" => "Olá Mundo",              // Usado na tag <title>
-    "title" => "Olá Mundo",                 // Usado na tag <header>
+    "sitename" => "HelloWord",              // Usado na tag <title>
+    "title" => "HelloWord",                 // Usado na tag <header>
     "slogan" => "Lendo e entendendo",       // Usado na tag <header>
     "logo" => "logo01.png",                 // Usado na tag <header>
 
@@ -33,8 +36,39 @@ $site = [
     "mysql_hostname" => "localhost",        // Servidor do banco de dados MySQL
     "mysql_username" => "root",             // Nome do usuário do MySQL para o app
     "mysql_password" => "",                 // Senha do usuário do MySQL para o app
-    "mysql_database" => "helloword",         // Nome do banco de dados do MySQL para o app
-    "summary_length" => 40
+    "mysql_database" => "helloword",        // Nome do banco de dados do MySQL para o app
+
+    // Setup da visualização
+    "summary_length" => 40,                  // Tamanho do corte do resumo 
+
+    /**
+     * Lista de redes sociais
+     *     "icon" foi obtido de https://fontawesome.com/icons/
+     *     "color" foi obtido de https://brandcolors.net/
+     **/
+    "social_list" => [
+        [
+            "name" => "GitHub.com",
+            "link" => "https://github.com/Carlowxx",
+            "icon" => "fa-brands fa-square-github fa-fw",
+            "color" => "#333"
+        ], [
+            "name" => "X / Twitter",
+            "link" => "https://twitter.com/",
+            "icon" => "fa-brands fa-square-x-twitter fa-fw",
+            "color" => "#14171a"
+        ],   [
+            "name" => "Instagram",
+            "link" => "https://instagram.com/",
+            "icon" => "fa-brands fa-square-instagram fa-fw",
+            "color" => "#405de6"
+        ], [
+            "name" => "LinkedIn",
+            "link" => "https://www.linkedin.com/in//",
+            "icon" => "fa-brands fa-linkedin fa-fw",
+            "color" => "#0a66c2"
+        ]
+    ]
 ];
 
 /**
@@ -53,7 +87,7 @@ $conn = new mysqli(
  * Trata erros de conexão com o banco de dados
  * ATENÇÃO! Isso não trata erros de script e não gera exceptions...
  *          Para isso, use PDO.
- **/ 
+ **/
 if ($conn->connect_error)
     die("Falha de conexão com o banco e dados: " . $conn->connect_error);
 
@@ -75,7 +109,7 @@ $conn->query('SET lc_time_names = pt_BR');
  *********************************/
 
 /**
- * Função para debug
+ * Função para debug 
  * Referências: 
  *      https://www.w3schools.com/tags/tag_pre.asp
  *      https://www.w3schools.com/php/func_var_var_dump.asp

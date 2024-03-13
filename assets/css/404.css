@@ -1,0 +1,36 @@
+article img {
+    width: 100%;
+    max-width: 300px;
+    display: block;
+    margin: auto;
+}
+
+.article,
+.viewed>div {
+    background-color: #eee;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    border-radius: .3rem;
+}
+
+.article:hover,
+.viewed>div:hover {
+    background-color: #ddd;
+}
+
+.article img,
+.viewed img {
+    width: 100%;
+    height: auto;
+    border-radius: .35rem .35rem 0 0;
+}
+
+.viewed>div>div {
+    padding: 0 1rem;
+}
+
+.viewed p {
+    margin: .5rem 0;
+}

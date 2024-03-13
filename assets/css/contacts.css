@@ -21,7 +21,12 @@
     cursor: pointer;
 }
 
-#contact {}
+#contact {
+    display: table;
+    margin: auto;
+    width: 100%;
+    max-width: 90%;
+}
 
 #contact label {
     display: block;
@@ -67,7 +72,7 @@
 #contact textarea:valid {
     border: 1px solid rgb(18, 118, 0);
     border-bottom: 3px solid rgb(18, 118, 0);
-    background-color: rgb(232,240,254);
+    background-color: rgb(232, 240, 254);
 }
 
 #contact:valid button {
@@ -77,6 +82,42 @@
     pointer-events: all;
 }
 
+/* Lista de ícones de redes sociais */
+.social-side {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 1rem;
+}
+
+.social-side a {
+    border-radius: .35rem;
+}
+
+.social-side a:hover {
+    background-color: #eee;
+}
+
+.social-side i {
+    font-size: 2.5rem;
+}
+
 /*
-rgb(232,240,254);
+Responsividade
+Telas de 768px ou mais... 
 */
+
+@media only screen and (min-width: 768px) {
+
+    /* Lista de ícones de redes sociais */
+    .social-side {
+        justify-content: space-around;
+        padding-bottom: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .social-side i {
+        font-size: 4rem;
+        padding: .25rem;
+    }
+
+}
