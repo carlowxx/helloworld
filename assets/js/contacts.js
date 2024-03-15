@@ -1,6 +1,8 @@
 // Obtém elementos para interação
 const btnClose = document.getElementById('closeme');
 const frmError = document.getElementById('error');
+const formFieldName = document.getElementById('name');
+const formFieldEmail = document.getElementById('email');
 
 // Só executa as ações quando o elemento existe no documento
 if (document.body.contains(frmError)) {
@@ -18,3 +20,12 @@ if (document.body.contains(frmError)) {
 function closeMe() {
     frmError.style.display = 'none';
 }
+
+// Monitora se houve mudanças na autenticação do usuário
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        // Se alguém se logou, preenche os campos com os dados do usuário
+        formFieldName.value = user.displayName;
+        formFieldEmail.value = user.email;
+    }
+});

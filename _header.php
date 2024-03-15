@@ -1,3 +1,13 @@
+<?php
+// Testa se solicitou a inclusão dos arquivos ".css" e ".js"
+$_css = $_js = '';
+if (isset($page['css'])) 
+    $_css = '<link rel="stylesheet" href="assets/css/' . $page["css"] . '">' . "\n";
+
+    if(isset($page['js']))
+    $_js = '<script src="assets/js/' . $page["js"] . '"></script>';
+
+?>
 <!DOCTYPE html>
 <html lang="pt-Br">
 
@@ -5,7 +15,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css /<?php echo $page["css"] ?>">
+    <?php
+    // Link da folha de estilos da página atual gerado dinâmicamente 
+    echo $_css;
+    ?>
     <link rel="shortcut icon" href="assets/img/<?php echo $site["logo"] ?>" >
     <title> Hypo - <?php echo $page["title"]?></title>
     
@@ -58,7 +71,7 @@
         </a>
 
         <a id="userAccess" href="login.php" title="Logue-se">
-            <img id="userImg" src="" alt="">
+        <img id="userImg" src="assets/img/logo01.png" alt="Login de usuário" referrerpolicy="no-referrer"> 
                 <i id="userIcon" class="fa-solid fa-right-to-bracket fa-fw"></i>
                 <span id="userLabel">Entrar</span>
             </a>

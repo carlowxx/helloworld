@@ -42,4 +42,4 @@ function login() {
             console.error(error);
         });
 
-}
+};

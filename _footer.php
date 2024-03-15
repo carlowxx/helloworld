@@ -26,9 +26,10 @@
 ?>
 <script src="assets/js/global.js"></script>
 
-<?php // Importa o JavaScript específico desta página dinâmicamente 
-?>
-<script src="assets/js/<?php echo $page["js"] ?>"></script>
+<?php
+    // Importa o JavaScript específico desta página dinâmicamente
+    echo $_js;
+    ?>
 </body>
 
 </html>
