@@ -1,0 +1,42 @@
+/* Oculta o card do usuário quando a página é carregada */
+#userCard {
+    display: none;
+}
+
+#userCard {
+    background-color: #ddd;
+    border-radius: .35rem;
+}
+
+#userCard img {
+    display: block;
+    margin: auto;
+    width: 100%;
+    max-width: 300px;
+    border-radius: .3rem;
+}
+
+#userCard h4 {
+    margin: .5rem 1rem 1rem 1rem;
+}
+
+#userCard ul {
+    padding: 0 1rem 1rem 2rem;
+    margin: 0;
+    font-size: small;
+}
+
+article button {
+    color: white;
+    width: 100%;
+    max-width: 250px;
+    cursor: pointer;
+}
+
+#btnGoogleProfile {
+    background-color: steelblue;
+}
+
+#btnLogout {
+    background-color: orangered;
+}

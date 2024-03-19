@@ -5,9 +5,9 @@ require("_global.php");
 
 // Configurações desta página
 $page = array(
-    "title" => "Artigo Completo", // Título desta página
-    "css" => "view.css",          // Folha de estilos desta página
-    "js" => "view.js",            // JavaScript desta página
+    "title" => "Artigo Completo",
+    "css" => "view.css",
+    "js" => "view.js"
 );
 
 // Obter o ID do artigo e armazenar na variável 'id'
@@ -66,9 +66,6 @@ if ($res->num_rows == 0) header('Location: 404.php');
 
 // Obtém o artigo e armazena em $art[]
 $art = $res->fetch_assoc();
-
-// Altera o título da página
-$page['title'] = $art['art_title'];
 
 // debug($art);
 
@@ -142,6 +139,7 @@ WHERE
     -- status online
     AND art_status = 'on'
 -- ordenados de forma aleatória
+-- Referências: https://w3schools.com/sql/func_mysql_rand.asp
 ORDER BY RAND()
 -- limitado ao máximo de 3 registros
 LIMIT 3;
@@ -152,13 +150,14 @@ $res = $conn->query($sql);
 // Inicializa a view
 $aside_articles = '<div class="aside_article"><h4>+ Artigos</h4>' . "\n";
 
-// Loop
+// Loop da view
 while ($aart = $res->fetch_assoc()) :
 
     $aside_articles .= <<<HTML
+
 <div onclick="location.href='/view.php?id={$aart['art_id']}'">
-<img src="{$aart['art_thumbnail']}" alt="{$aart['art_title']}">
-<h5>{$aart['art_title']}</h5>
+    <img src="{$aart['art_thumbnail']}" alt="{$aart['art_title']}">
+    <h5>{$aart['art_title']}</h5>
 </div>
 
 HTML;
@@ -168,11 +167,21 @@ endwhile;
 // Fecha view
 $aside_articles .= '</div>';
 
+// O título da página contém o título do artigo
+$page['title'] = $art['art_title'];
+
 // Inclui o cabeçalho do documento
 require('_header.php');
 ?>
 
-<article><?php echo $article ?></article>
+<article>
+    <?php
+    echo $article;
+
+    // Inclui o processamento dos comentários
+    require('widgets/_comments.php');
+    ?>
+</article>
 
 <aside>
     <?php
@@ -181,4 +190,7 @@ require('_header.php');
     ?>
 </aside>
 
-<?php require('_footer.php') ?>
+<?php
+// Inclui o rodapé do documento
+require('_footer.php');
+?>

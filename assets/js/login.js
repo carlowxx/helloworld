@@ -14,11 +14,10 @@ firebase.auth().onAuthStateChanged((user) => {
         location.href = refValue ? refValue : 'index.php';
     } else {
         // Se alguém deslogou, faça isso...
+        // Monitorar cliques no botão de login
+        btnLogin.addEventListener('click', login);
     }
 });
-
-// Monitorar cliques no botão de login
-btnLogin.addEventListener('click', login);
 
 // Função para fazer login
 function login() {
@@ -31,6 +30,11 @@ function login() {
         .signInWithPopup(provider)
         .then((userData) => {
             // Se deu certo...
+            // Obtém o parâmetro do link da página
+            var searchParams = new URLSearchParams(window.location.search);
+            // Obtém o valor do parâmetro "ref"
+            var refValue = searchParams.get('ref');
+            // Redireciona para a página de origem
             location.href = refValue ? refValue : 'index.php';
         })
         .catch((error) => {
@@ -42,4 +46,4 @@ function login() {
             console.error(error);
         });
 
-};
+}
