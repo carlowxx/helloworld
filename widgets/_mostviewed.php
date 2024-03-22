@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Total a ser exibido, por default '3'
+ * Para alterar este valor, no código principal, defina $num_list antes de 
+ * fazer o require() deste código.
+ **/
+$num_list = (isset($num_list)) ? intval($num_list) : 3;
+
 // Obtém uma lista de artigos mais visualizados no site
 $sql = <<<SQL
 
@@ -38,7 +45,7 @@ while ($mv = $res->fetch_assoc()) :
     // Monta a view HTML
     $aside_viewed .= <<<HTML
 
-<div onclick="location.href = 'view.php?id={$mv['art_id']}'">
+<div class="aside" onclick="location.href = 'view.php?id={$mv['art_id']}'">
     <img src="{$mv['art_thumbnail']}" alt="{$mv['art_title']}">
     <div>
     <h5>{$mv['art_title']}</h5>
@@ -53,3 +60,5 @@ $aside_viewed .= '</div>';
 
 // Envia para a view
 echo $aside_viewed;
+
+?>

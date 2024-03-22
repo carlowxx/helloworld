@@ -148,7 +148,12 @@ SQL;
 $res = $conn->query($sql);
 
 // Inicializa a view
-$aside_articles = '<div class="aside_article"><h4>+ Artigos</h4>' . "\n";
+$nameauthor = explode(" ", $art["emp_name"])[0];
+
+
+$aside_articles =<<<HTML
+<div class="aside_article"><h4>+ Artigos de {$nameauthor} </h4>
+HTML;
 
 // Loop da view
 while ($aart = $res->fetch_assoc()) :

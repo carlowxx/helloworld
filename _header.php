@@ -44,8 +44,8 @@ if (isset($page['css']))
             </div>
         </div>
         <div class="header-search">
-            <form action="" method="get">
-                <input type="search" name="q" id="search" placeholder="Pesquisar...">
+            <form action="search.php" method="get" onclick = "return searchCheck()"> 
+                <input type="search" name="q" id="search" placeholder="Pesquisar..." >
                 <button class="search" type="submit">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>

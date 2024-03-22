@@ -107,3 +107,6 @@
   #commentForm:invalid textarea {
     background-color: rgb(255, 230, 230);
   }
+  @media screen and (min-width: 768px) {.article small {text-align: right;}  }
+  .article small{ display: block;
+  }

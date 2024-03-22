@@ -64,6 +64,7 @@ margin-bottom: 1rem;
 border-style: groove;
 }
 .viewed img{
+    
     margin-top: 1rem;
     height: auto;
     display: flex;
