@@ -1,26 +1,29 @@
 /* Oculta o card do usuário quando a página é carregada */
+
 #userCard {
     display: none;
 }
 
-#userCard {
+.user-box {
+    display: table;
+    margin: auto;
     background-color: #ddd;
     border-radius: .35rem;
 }
 
-#userCard img {
+.user-box img {
     display: block;
     margin: auto;
     width: 100%;
     max-width: 300px;
-    border-radius: .3rem;
+    border-radius: .3rem .3rem 0 0;
 }
 
-#userCard h4 {
+.user-box h4 {
     margin: .5rem 1rem 1rem 1rem;
 }
 
-#userCard ul {
+.user-box ul {
     padding: 0 1rem 1rem 2rem;
     margin: 0;
     font-size: small;

@@ -1,0 +1,29 @@
+.emprow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.empcol {
+    width: 100%;
+    max-width: 250px;
+    background-color: #eee;
+    margin: .5rem;
+    border-radius: .35rem;
+}
+
+.empcol img {
+    width: 100%;
+    border-radius: .3rem .3rem 0 0;
+}
+
+.empcol h3 {
+    margin: .5rem;
+    text-align: center;
+}
+
+.empcol ul {
+    margin: 0 0 .5rem 0;
+    padding-left: 2rem;
+}
