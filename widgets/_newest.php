@@ -37,12 +37,16 @@ if ($res->num_rows > 0) :
         elseif ($art['art_views'] == 1) $art_views = "1 visualização";
         else $art_views = "{$art['art_views']} visualizações";
 
-        $output .= aside_box([
+        $box_options = [
             'href' => "view.php?id={$art['art_id']}",
             'title' => $art['art_title'],
             'body' => $art['art_summary'],
-            'footer' => $art_views
-        ]);
+            'footer' => $art_views,
+            // 'echo' => true,
+            // 'limit' => 20
+        ];
+
+        $output .= aside_box($box_options);
 
     endwhile;
 

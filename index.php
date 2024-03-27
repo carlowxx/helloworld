@@ -5,9 +5,8 @@ require("_global.php");
 
 // Configurações desta página
 $page = array(
-    "title" => $site['slogan'],      // Título desta página
-    "css" => "index.css",            // Folha de estilos desta página
-    "js" => "index.js",              // JavaScript desta página
+    "title" => $site['slogan'], // Título desta página
+    "css" => "index.css", // Folha de estilos desta página
 );
 
 /**
@@ -22,8 +21,8 @@ $page = array(
 $sql = <<<SQL
 
 SELECT
--- Obter os campos id, thumbnail, title, summary
-	art_id, art_date, art_thumbnail, art_title, art_summary
+-- Obter o id
+	art_id
 FROM article
 
 -- Obter somente artigos no passado e presente
@@ -44,28 +43,22 @@ $res = $conn->query($sql);
 // Conta os registros e armazena em $total
 $total = $res->num_rows;
 
-// Variável que contém a lista de artigos em HTML
-$articles = "";
+// Variável que contém a lista de artigos em HTML e título
+$articles = '';
 
 // Se não tem artigos, exibe um aviso
 if ($total == 0) :
-    $articles = "<p>Não achei nada!</p>";
+    $articles = "<h2>Artigos recentes</h2><p>Não achei nada!</p>";
 else :
+
+    // Título
+    if ($total == 1) $articles = '<h2>Artigo mais recente</h2>';
+    else $articles = "<h2>{$total} artigos mais recentes</h2>";
 
     // Loop para obter cada artigo
     while ($art = $res->fetch_assoc()) :
 
-        $articles .= <<<HTML
-
-<div class="article" onclick="location.href = 'view.php?id={$art['art_id']}'">
-    <img src="{$art['art_thumbnail']}" alt="{$art['art_title']}">
-    <div>
-        <h4>{$art['art_title']}</h4>
-        <p>{$art['art_summary']}</p>
-    </div>
-</div>
-
-HTML;
+        $articles .= view_article($art['art_id']);
 
     endwhile;
 
@@ -76,18 +69,17 @@ require('_header.php');
 ?>
 
 <article>
-
-    <h2><?php echo $total ?> artigos mais recentes não consigo ver nada</h2>
     <?php echo $articles ?>
-
 </article>
 
 <aside>
-   
-    <?php require("widgets/_mostviewed.php");
-    require("widgets/_mostcomments.php")
-
+    <?php 
+    // Mostra os artigos mais visualizados
+    require('widgets/_mostviewed.php');
+    
+    // Atividade 1) Mostra os artigos mais comentados
+    require('widgets/_mostcommented.php');
     ?>
-</aside>
+</aside> 
 
 <?php require('_footer.php') ?>

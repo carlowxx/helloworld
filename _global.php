@@ -30,7 +30,7 @@ $site = [
     "sitename" => "HelloWord",              // Usado na tag <title>
     "title" => "HelloWord",                 // Usado na tag <header>
     "slogan" => "Lendo e entendendo",       // Usado na tag <header>
-    "logo" => "logo01.png",                 // Usado na tag <header>
+    "logo" => "logo02.png",                 // Usado na tag <header>
 
     // Dados de conexão com o MySQL:
     "mysql_hostname" => "localhost",        // Servidor do banco de dados MySQL
@@ -49,22 +49,32 @@ $site = [
     "social_list" => [
         [
             "name" => "GitHub.com",
-            "link" => "https://github.com/Carlowxx",
+            "link" => "https://github.com/Luferat",
             "icon" => "fa-brands fa-square-github fa-fw",
             "color" => "#333"
         ], [
             "name" => "X / Twitter",
-            "link" => "https://twitter.com/",
+            "link" => "https://twitter.com/Luferat",
             "icon" => "fa-brands fa-square-x-twitter fa-fw",
             "color" => "#14171a"
-        ],   [
+        ], [
+            "name" => "Youtube",
+            "link" => "https://www.youtube.com/channel/UCkN6I-gfJlL5lUj9shkyxPQ",
+            "icon" => "fa-brands fa-square-youtube fa-fw",
+            "color" => "#ff0000"
+        ], [
+            "name" => "Facebook",
+            "link" => "https://facebook.com/Luferat",
+            "icon" => "fa-brands fa-square-facebook fa-fw",
+            "color" => "#1877f2"
+        ], [
             "name" => "Instagram",
-            "link" => "https://instagram.com/",
+            "link" => "https://instagram.com/Luferat",
             "icon" => "fa-brands fa-square-instagram fa-fw",
             "color" => "#405de6"
         ], [
             "name" => "LinkedIn",
-            "link" => "https://www.linkedin.com/in//",
+            "link" => "https://www.linkedin.com/in/luferat/",
             "icon" => "fa-brands fa-linkedin fa-fw",
             "color" => "#0a66c2"
         ]
@@ -131,4 +141,136 @@ function debug($target, $exit = false)
     // var_dump($target);   // Exibe um debug mais completo
     echo "</pre>";
     if ($exit) exit();
+}
+
+/**
+ * Função que exibe um artigo pelo id na forma de card ou banner.
+ **/
+function view_article($article_id)
+{
+
+    // Obtém a variável $conn
+    global $conn;
+
+    // Obtém o artigo do banco de dados conforme o ID
+    $sql = <<<SQL
+
+SELECT 
+	art_id, art_thumbnail, art_title, art_summary
+FROM article
+WHERE 
+    art_id = '{$article_id}';
+
+SQL;
+
+    $res = $conn->query($sql);
+    $art = $res->fetch_assoc();
+
+    return <<<HTML
+
+        <div class="article" onclick="location.href = 'view.php?id={$art['art_id']}'">
+        <img src="{$art['art_thumbnail']}" alt="{$art['art_title']}">
+        <div>
+            <h4>{$art['art_title']}</h4>
+            <p>{$art['art_summary']}</p>
+        </div>
+        </div>
+
+    HTML;
+}
+/**
+ * Função que exibe caixa de conteúdo na <aside>
+ * parâmetros (todos opcionais):
+ *  [
+ *      'href' => URL string → URL de destino ao clicar na caixa. Default: caixa não clicável
+ *      'title' => string → Título (<h5>) da caixa. Default: sem título
+ *      'body' => string → Conteúdo da caixa. Default: sem conteúdo
+ *      'limit' => integer → Caracteres de corte de 'body'. Ao cortar, adiciona '...' no final. Default: sem corte
+ *      'footer' => string → Conteúdo do rodapé. Default: sem conteúdo
+ *      'echo' => boolean → Exibe a caixa na view. Default: sem exibição
+ *  ]
+ * 
+ * Importante!
+ * A função deve ser "chamada" dentro de um elemento div.aside_block.
+ * Exemplo de uso:
+ * 
+ *  <div class="aside_block">
+ *    <h3>Título da seção</h3>
+ *    <?php
+ *      // Isso pode estar em um loop!
+ *      aside_box([
+ *        'href' => 'view.php?id=1',
+ *        'title' => "Bem-vindo ao Blog",
+ *        'body' => 'Nosso blog é dedicado a explorar o fascinante universo das plantas e árvores, desde ornamentais até variedades frutíferas e medicinais.',
+ *        'footer' => '10 visitas',
+ *        'echo' => true,
+ *        'limit' => 50
+ *      ]);
+ *    ?>
+ *  </div>
+ * 
+ * As folhas de estilo de div.aside_block e div.clickable estão em 'assets/css/globa.css'.
+ **/
+function aside_box($data = [])
+{
+
+    // Se o array de parâmetros está vazio, retorna vazio
+    if (empty($data))
+        return '';
+
+    // Inicializa variáveis
+    $clicked = $title = $body = $body_content = $footer = '';
+
+    // Testa se enviou um link na chave 'href'
+    if (isset($data['href']))
+        $clicked = 'class="clicked" onclick="location.href = \'' . $data['href'] . '\'"';
+
+    // Testa se envoiu um título na chave 'title'
+    if (isset($data['title']))
+        $title = "<h5>{$data['title']}</h5>";
+
+    // Testa se enviou um conteúdo na chave 'body'
+    if (isset($data['body'])) {
+
+        // Testa se solicitou o corte do conteúdo
+        if (isset($data['limit']))
+            // Excuta o corte
+            $body_content = cutString($data['body'], $data['limit']);
+        else
+            $body_content = $data['body'];
+
+        $body = '<small title="' . $data['body'] . '">' . $body_content . '</small>';
+    }
+
+    // Testa se solicitou um footer na chave 'footer'
+    if (isset($data['footer']))
+        $footer = '<small class="footer">' . $data['footer'] . '</small>';
+
+    $out = <<<HTML
+
+        <div {$clicked}>
+            {$title}
+            {$body}
+            {$footer}
+        </div>
+
+    HTML;
+
+    if (isset($data['echo']))
+        echo $out;
+
+    return $out;
+}
+
+/**
+ * Função que corta uma string
+ * Caso a string tenha mais de XX caracteres, ela será cortada e terá "..." no final do corte
+ **/
+function cutString($string, $limit = 50, $sufix = "...")
+{
+    if (strlen($string) > $limit) {
+        // Corta a string no limite especificado
+        $string = substr($string, 0, $limit - strlen($sufix)) . $sufix;
+    }
+    return $string;
 }

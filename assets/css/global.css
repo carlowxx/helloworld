@@ -249,7 +249,7 @@ telas de 425px ou mais...
         margin-right: .35rem;
     }
 
-    nav a:hover {}
+    
 
     nav a i {
         font-size: 1.25rem;
@@ -263,4 +263,34 @@ telas de 425px ou mais...
 
 #userImg, #userIcon{
     display: none;
+}
+.aside_block div {
+    background-color: #fff;
+    padding: .5rem;
+    border-radius: .35rem;
+    margin-bottom: 1rem;
+}
+
+.clicked {
+    cursor: pointer;
+}
+
+.clicked:hover {
+    background-color: #eee;
+}
+
+.aside_block h5 {
+    margin: 0;
+}
+
+.aside_block small {
+    display: block;
+    margin-top: .5rem;
+}
+
+.aside_block small.footer {
+    border-top: 1px dotted grey;
+    padding-top: .25rem;
+    font-size: 70%;
+    text-align: right;
 }

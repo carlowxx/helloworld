@@ -1,4 +1,4 @@
-```<?php
+<?php
 
 // Carrega configurações globais
 require("_global.php");
@@ -6,14 +6,14 @@ require("_global.php");
 // Configurações desta página
 $page = array(
     "title" => "Procurando...",
-    "css" => "index.css",
-    "js" => "search.js"
+    "css" => "index.css"
 );
 
-// Incializa variável da view
+// inicializa a view
 $search_view = '';
 
-$total = '';
+// Incializa vatiável com total de comentários
+$total = 0;
 
 // Obtém o termo de busca da URL
 $query = isset($_GET['q']) ? trim(htmlentities(strip_tags($_GET['q']))) : '';
@@ -21,13 +21,19 @@ $query = isset($_GET['q']) ? trim(htmlentities(strip_tags($_GET['q']))) : '';
 // Se a query NÃO está vazia
 if ($query != '') :
 
+    // Incializa variável da view
+    $search_view .= "<h2>Procurando por '{$query}'</h2>";
+
+    // Altera <title>
+    $page['title'] = "Procurando por '{$query}'";
+
     // Consulta SQL usa prepared statement
     $sql = <<<SQL
 
 -- Referências: https://www.w3schools.com/mysql/mysql_like.asp
 
 SELECT 
-	art_id, art_thumbnail, art_title, art_summary 
+	art_id 
 FROM article 
 WHERE
 	-- Requisitos padrão
@@ -53,6 +59,7 @@ SQL;
         $search_query
     );
     $stmt->execute();
+
     // Obtém o resultado da consulta
     $res = $stmt->get_result();
 
@@ -66,42 +73,18 @@ SQL;
         if ($total == 1) $viewtotal = '1 resultato';
         else $viewtotal = "{$total} resultados";
 
-        $search_view .= <<<HTML
-        
-<h2>Procurando por {$query}</h2>
-<p><small class="authordate">{$viewtotal}</small></p>
+        $search_view .= "<p><small class=\"authordate\">{$viewtotal}</small></p>";
 
-HTML;
-
-        while ($art = $res->fetch_assoc()) :
-
-            $search_view .= <<<HTML
-
-<div class="article" onclick="location.href = 'view.php?id={$art['art_id']}'">
-    <img src="{$art['art_thumbnail']}" alt="{$art['art_title']}">
-    <div>
-        <h4>{$art['art_title']}</h4>
-        <p>{$art['art_summary']}</p>
-    </div>
-</div>
-
-HTML;
-
-        endwhile;
+        while ($art = $res->fetch_assoc())
+            $search_view .= view_article($art['art_id']);
 
     // Se não achou nada:
     else :
-        $search_view .= <<<HTML
-
-<h2>Procurando por {$query}</h2>
-<p class="center">Nenhum conteúdo encontrado com "{$query}".</p>
-
-HTML;
-
+        $search_view .= "<p class=\"center\">Nenhum conteúdo encontrado com '{$query}'.</p>";
     endif;
 
 else :
-
+//É o acumulador
     $search_view .= <<<HTML
 
 <h2>Procurando...</h2>
@@ -122,15 +105,17 @@ require('_header.php');
     ?>
 </article>
 
-<aside><?php 
-    require("widgets/_mostviewed.php");
-    
+<aside>
+    <?php
+    // Mostra os artigos mais visualizados
+    require('widgets/_mostviewed.php');
+    // Caso a busca retorne mais que 4 itens, exibe artigos mais comentados.
     if ($total > 4)
-        require('widgets/_mostcommented.php')
-?></aside>
+        require('widgets/_mostcommented.php');
+    ?>
+</aside>
 
 <?php
 // Inclui o rodapé do documento
 require('_footer.php');
 ?>
-```
